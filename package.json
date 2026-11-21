@@ -39,7 +39,7 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "test": "node --test test/",
+    "test": "node --test",
     "check-package": "node scripts/check-package.mjs",
     "prepublishOnly": "npm run build && npm test && node scripts/check-package.mjs"
   },

@@ -6,13 +6,13 @@ chat, or build your own chat UI on the public chat API.
 ## Install
 
 ```sh
-npm install @dialogplus/webchat
+npm install @dialogplusai/webchat
 ```
 
 ## The ready-made chat in React
 
 ```tsx
-import { DialogPlusWidget, dialogPlusCommands } from '@dialogplus/webchat/react';
+import { DialogPlusWidget, dialogPlusCommands } from '@dialogplusai/webchat/react';
 
 export function App({ user }) {
   return (
@@ -39,7 +39,7 @@ Add your site to the widget's allowed domains (Security tab).
 ## Your own chat UI
 
 ```ts
-import { createChat } from '@dialogplus/webchat';
+import { createChat } from '@dialogplusai/webchat';
 
 const chat = createChat({
   widgetKey: 'wk_...',

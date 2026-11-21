@@ -1,5 +1,5 @@
 {
-  "name": "@dialogplus/webchat",
+  "name": "@dialogplusai/webchat",
   "version": "0.1.0",
   "description": "DialogPlus AI web chat: a typed client for the public chat API, and React bindings.",
   "license": "MIT",

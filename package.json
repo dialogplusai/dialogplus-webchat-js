@@ -1,0 +1,54 @@
+{
+  "name": "@dialogplus/webchat",
+  "version": "0.1.0",
+  "description": "DialogPlus AI web chat: a typed client for the public chat API, and React bindings.",
+  "license": "MIT",
+  "author": "DialogPlus AI (https://dialogplus.ai)",
+  "homepage": "https://dialogplus.ai",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "default": "./dist/react.js"
+    }
+  },
+  "files": [
+    "dist/*.js",
+    "dist/*.d.ts",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "peerDependencies": {
+    "react": ">=17"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "node --test test/",
+    "check-package": "node scripts/check-package.mjs",
+    "prepublishOnly": "npm run build && npm test && node scripts/check-package.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dialogplusai/dialogplus-webchat-js.git"
+  },
+  "devDependencies": {
+    "typescript": "5.6.3",
+    "@types/react": "18.3.12"
+  }
+}

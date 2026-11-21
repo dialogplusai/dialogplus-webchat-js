@@ -1,0 +1,46 @@
+# Copied to .github/workflows/publish.yml in the PUBLIC repository that holds
+# only this package (see publishing/PUBLISHING.md). Publishes on a version tag
+# with npm trusted publishing (OIDC: no npm token is stored anywhere) and
+# provenance (anyone can verify the package was built from that repository).
+#
+# Trusted publishing needs npm 11.5.1 or later on Node 22.14 or later, a
+# GitHub-hosted runner and `id-token: write` (docs.npmjs.com/trusted-publishers).
+# Actions are pinned to full commit SHAs, so a moved tag can't change what runs.
+name: Publish to npm
+
+on:
+  push:
+    tags: ["v*.*.*"]
+
+permissions:
+  contents: read
+  id-token: write   # trusted publishing + provenance
+
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: npm   # a reviewer approves each release (repository settings)
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803  # v6.1.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38  # v6.5.0
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+      - name: npm 11.5.1 or later (trusted publishing)
+        run: |
+          npm install -g npm@11
+          npm --version
+      - run: npm ci
+      - name: Version matches the tag
+        run: test "v$(node -p "require('./package.json').version")" = "$GITHUB_REF_NAME"
+      - run: npm run build
+      - run: npm test
+      - name: Only the allowed files, no source maps, no secrets
+        run: node scripts/check-package.mjs
+      - run: npm publish --provenance --access public
